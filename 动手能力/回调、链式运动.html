@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    .box {
+        width: 100px;
+        height: 100px;
+        background: #ccc;
+        position: absolute;
+        left: 20px;
+    }
+
+    .oDiv1 {
+        width: 100px;
+        height: 200px;
+        background: red;
+        position: absolute;
+        left: -100px;
+        top: 300px;
+    }
+
+    .oDiv1text {
+        width: 30px;
+        height: 60px;
+        background: black;
+        position: absolute;
+        right: -30px;
+        top: 70px;
+        color: white;
+        text-align: center;
+    }
+
+    .opstyle {
+        opacity: 0.3
+    }
+</style>
+
+<body>
+    <button class="btn">点击</button>
+    <div class="box"></div>
+</body>
+
+</html>
+<script>
+
+    window.onload = function () {
+
+        var box = document.querySelector('.box');
+        box.onclick = function () {
+            move(this, {
+                width: 200,
+               
+                
+            }, 10,function(){
+                move(this, {height: 400},10)
+            })
+        }
+
+//width=300的时候到达了目标点，就清除了定时器。所以高没有到达500就停止了。
+//判断json里面的属性全部都走完。
+        function move(obj, json, speet,fn) {
+            clearInterval(obj.time);
+            var icur = 0;
+            obj.time = setInterval(function () {
+                var ismove=true;
+                for (var attr in json) {
+                   var target=json[attr];  
+                    if (attr == 'opacity') {
+                        icur = (getComputedStyle(obj)[attr]) * 100;
+                    } else {
+                        icur = parseInt(getComputedStyle(obj)[attr])
+                    }
+                    if (icur !== target) {
+                        ismove=false;
+                        // clearInterval(obj.time);
+                        if (json[attr] == 'opacity') {
+                            obj.style[attr] = (icur + speet) / 100;
+                        } else {
+                            obj.style[attr] = icur + speet + 'px';
+                        }
+                    }
+                }
+                if(ismove){
+                    clearInterval(obj.time);
+                    fn&&fn.call(obj);
+                }
+
+
+            }, 30);
+        }
+
+        // function move3(obj, attr, target, speet) {
+        //     clearInterval(time);
+        //     time = setInterval(function () {
+        //         var icur = (getComputedStyle(oimg)[attr]) * 100;
+        //         if (icur == target) {
+        //             clearInterval(time);
+        //         } else {
+        //             oimg.style[attr] = (icur + speet) / 100;
+        //         }
+        //     }, 30);
+        // }
+
+        // function move4() {
+        //     clearInterval(time);
+        //     time = setInterval(function () {
+        //         var imgstyle = (getComputedStyle(oimg).opacity) * 100;
+        //         if (imgstyle == 30) {
+        //             clearInterval(time);
+        //         } else {
+        //             oimg.style.opacity = (imgstyle - 10) / 100;
+        //         }
+        //     }, 30);
+        // }
+
+        // function move1() {
+        //     clearInterval(time);
+        //     time = setInterval(function () {
+        //         if (oDiv1.offsetLeft == 0) {
+        //             clearInterval(time);
+        //         } else {
+        //             oDiv1.style.left = oDiv1.offsetLeft + 10 + 'px';
+        //         }
+        //     }, 30);
+        // }
+
+        // function move2() {
+        //     clearInterval(time);
+        //     time = setInterval(function () {
+        //         if (oDiv1.offsetLeft == -100) {
+        //             clearInterval(time);
+        //         } else {
+        //             oDiv1.style.left = oDiv1.offsetLeft - 10 + 'px';
+        //         }
+        //     }, 30);
+        // }
+
+    }
+
+
+</script>

@@ -1,0 +1,154 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>无标题文档</title>
+	<style>
+		ul,
+		h2 {
+			padding: 0;
+			margin: 0;
+		}
+
+		li {
+			list-style: none;
+		}
+
+		#list {
+			width: 240px;
+			border: 1px solid #333;
+			margin: 0 auto;
+		}
+
+		#list .lis {}
+
+		#list h2 {
+			height: 30px;
+			line-height: 30px;
+			text-indent: 20px;
+			background: url(img/ico1.gif) no-repeat 5px center #6FF;
+			color: #000;
+		}
+
+		#list .active {
+			background: url(img/ico2.gif) no-repeat 5px center #FF9;
+			color: #000;
+		}
+
+		#list ul {
+			display: none;
+		}
+
+		#list ul li {
+			line-height: 24px;
+			border-bottom: 1px solid #333;
+			text-indent: 24px;
+		}
+
+
+		#list ul .hover {
+			background: #6FF;
+		}
+	</style>
+
+</head>
+<script>
+	window.onload = function () {
+		var oList = document.getElementById('list');
+		var oh2 = oList.getElementsByTagName('h2');
+		var oul = oList.getElementsByTagName('ul');
+		var isOpen = false;   //false:记录默认不展开；true:展开列表
+		var liarr = [];
+		var nextli = null;
+
+		for (var i = 0; i < oh2.length; i++) {
+			oh2[i].index = i;
+			oh2[i].isopen = false; //false：关闭；true:打开
+			oh2[i].onclick = function () {
+				for(var j=0;j<oh2.length;j++){
+					if(j!=this.index){						
+						oul[j].style.display = 'none';
+						oh2[j].isopen = false;
+						oh2[j].className='';
+					}					
+				}
+				if (!this.isopen) {
+					this.className = 'active';				
+					oul[this.index].style.display = 'block';
+				} else {
+					this.className = '';
+					this.nextElementSibling.style.display = 'none';
+				}
+				this.isopen = !this.isopen;
+
+				// if (oh2[this.index].className == '') {
+				// 	this.className = 'active';
+				// 	// this.nextElementSibling.style.display='block';
+				// 	oul[this.index].style.display = 'block';
+				// } else {
+				// 	this.className = '';
+				// 	this.nextElementSibling.style.display = 'none';
+				// }
+			}
+		}
+
+		//循环遍历处理所有的ul下面的li,吧它放到一个数组中liarr,然后遍历liarr中。去除所有的class,为当前的li
+		//添加class。
+		for (var i = 0; i < oul.length; i++) {
+			nextli = oul[i].getElementsByTagName('li')
+			for (var j = 0; j < nextli.length; j++) {
+				liarr.push(nextli[j]);
+			}
+		}
+		for (var i = 0; i < liarr.length; i++) {
+			liarr[i].num = i;
+			liarr[i].onclick = function () {
+				for (var j = 0; j < liarr.length; j++) {
+					liarr[j].className = '';
+				}
+				liarr[this.num].className = 'hover'
+
+			}
+		}
+
+
+
+
+	}
+</script>
+
+<body>
+
+	<ul id="list">
+		<li class="lis">
+			<h2>我的好友</h2>
+			<ul>
+				<li>张三</li>
+				<li>张三</li>
+				<li>张三</li>
+				<li>张三</li>
+			</ul>
+		</li>
+		<li class="lis">
+			<h2>企业好友</h2>
+			<ul>
+				<li>李四</li>
+				<li>李四</li>
+				<li>李四</li>
+				<li>李四</li>
+				<li>李四</li>
+			</ul>
+		</li>
+		<li class="lis">
+			<h2>黑名单</h2>
+			<ul>
+				<li>张小三</li>
+				<li>李小四</li>
+			</ul>
+		</li>
+	</ul>
+
+</body>
+
+</html>

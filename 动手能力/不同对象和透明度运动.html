@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    .box {
+        width: 100px;
+        height: 100px;
+        background: #ccc;
+        position: absolute;
+        left: 20px;
+    }
+
+    .oDiv1 {
+        width: 100px;
+        height: 200px;
+        background: red;
+        position: absolute;
+        left: -100px;
+        top: 300px;
+    }
+
+    .oDiv1text {
+        width: 30px;
+        height: 60px;
+        background: black;
+        position: absolute;
+        right: -30px;
+        top: 70px;
+        color: white;
+        text-align: center;
+    }
+
+    .opstyle {
+        opacity: 0.3
+    }
+</style>
+
+<body>
+    <button class="btn">点击</button>
+    <div class="box"></div>
+
+    <div class="oDiv1">
+        <div class="oDiv1text"></div>
+    </div>
+
+    <img class="opstyle" src="img/normal.png" alt="">
+
+</body>
+
+</html>
+<script>
+
+    window.onload = function () {
+
+        var oDiv1 = document.querySelector('.oDiv1');
+        var oimg = document.querySelector('img');
+        var inow = 0;
+        var time = null;
+        // alert(imgstyle)
+
+        oimg.onmouseover = function () {
+            move(this, 'opacity', 100, 10)
+        }
+        oimg.onmouseout = function () {
+            move(this, 'opacity', 30, -10);
+        }
+        oDiv1.onmouseover = function () {
+            move(this, 'left', 0, 10)
+        }
+        oDiv1.onmouseout = function () {
+            move(this, 'left', -100, -10);
+        }
+
+        
+        function move(obj, attr, target, speet) {
+            clearInterval(obj.time);
+            var icur = 0;
+            obj.time = setInterval(function () {
+                if (attr == 'opacity') {
+                    icur = (getComputedStyle(obj)[attr]) * 100;
+                } else {
+                    icur = parseInt(getComputedStyle(obj)[attr])
+                }
+                if (icur == target) {
+                    clearInterval(obj.time);
+                } else {
+                    if (attr == 'opacity') {
+                        obj.style[attr] = (icur + speet) / 100;
+                    } else {
+                        obj.style[attr] = icur + speet + 'px';
+                    }
+
+                }
+            }, 30);
+        }
+
+        // function move3(obj, attr, target, speet) {
+        //     clearInterval(time);
+        //     time = setInterval(function () {
+        //         var icur = (getComputedStyle(oimg)[attr]) * 100;
+        //         if (icur == target) {
+        //             clearInterval(time);
+        //         } else {
+        //             oimg.style[attr] = (icur + speet) / 100;
+        //         }
+        //     }, 30);
+        // }
+
+        // function move4() {
+        //     clearInterval(time);
+        //     time = setInterval(function () {
+        //         var imgstyle = (getComputedStyle(oimg).opacity) * 100;
+        //         if (imgstyle == 30) {
+        //             clearInterval(time);
+        //         } else {
+        //             oimg.style.opacity = (imgstyle - 10) / 100;
+        //         }
+        //     }, 30);
+        // }
+
+        // function move1() {
+        //     clearInterval(time);
+        //     time = setInterval(function () {
+        //         if (oDiv1.offsetLeft == 0) {
+        //             clearInterval(time);
+        //         } else {
+        //             oDiv1.style.left = oDiv1.offsetLeft + 10 + 'px';
+        //         }
+        //     }, 30);
+        // }
+
+        // function move2() {
+        //     clearInterval(time);
+        //     time = setInterval(function () {
+        //         if (oDiv1.offsetLeft == -100) {
+        //             clearInterval(time);
+        //         } else {
+        //             oDiv1.style.left = oDiv1.offsetLeft - 10 + 'px';
+        //         }
+        //     }, 30);
+        // }
+
+    }
+
+
+</script>

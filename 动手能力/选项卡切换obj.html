@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    .tabTit ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    .tabTit ul li {
+        display: inline-block;
+        padding: 5px;
+        background-color: darkkhaki;
+    }
+
+    .tabTit ul li.active {
+        background-color: red;
+    }
+
+    .tabCon>div {
+        display: none;
+    }
+
+
+
+    .tabTit2 ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    .tabTit2 ul li {
+        display: inline-block;
+        padding: 5px;
+        background-color: darkkhaki;
+    }
+
+    .tabTit2 ul li.active {
+        background-color: red;
+    }
+
+    .tabCon2>div {
+        display: none;
+    }
+</style>
+
+
+<body>
+    <div id="tab">
+        <div class="tabTit2">
+            <ul>
+                <li class="active">1111</li>
+                <li>222</li>
+                <li>333</li>
+            </ul>
+        </div>
+        <div class="tabCon2">
+            <div style="display: block">111</div>
+            <div>222</div>
+            <div>333</div>
+        </div>
+    </div>
+
+
+    <div id="tab2">
+        <div class="tabTit">
+            <ul>
+                <li class="active">aaa</li>
+                <li>bbb</li>
+                <li>ccc</li>
+            </ul>
+        </div>
+        <div class="tabCon">
+            <div style="display: block">111</div>
+            <div>222</div>
+            <div>333</div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+<script>
+    // var tabTit = null;
+    // var tabCon = null;
+    // var nowTab = 0;
+    // for (var i = 0; i < tabTit.length; i++) {
+    //     tabTit[i].index = i;
+    //     tabTit[i].onclick = change;
+    // }
+    // function change() {
+    //     for (var k = 0; k < tabTit.length; k++) {
+    //         tabTit[k].classList.remove("active");
+    //         tabCon[k].style.display = 'none';
+    //     }
+    //     this.className = 'active';
+    //     tabCon[this.index].style.display = 'block';
+    // }
+    window.onload = function () {
+        var t1 = new tab('tabTit', 'tabCon');
+        t1.init();
+        var t2 = new tab('tabTit2', 'tabCon2');
+        t2.init();
+        t2.auto();
+    };
+    function tab(tit, con) {
+        this.tabTit = document.querySelectorAll('.' + tit + ' ul li');
+        this.tabCon = document.querySelectorAll('.' + con + '> div');
+        this.nowTab = 0;
+    }
+    tab.prototype.change = function (obj) {
+        for (var k = 0; k < this.tabTit.length; k++) {
+            this.tabTit[k].classList.remove("active");
+            this.tabCon[k].style.display = 'none';
+        }
+        obj.className = 'active';
+        this.tabCon[obj.index].style.display = 'block';
+    }
+    tab.prototype.init = function () {
+        var That = this;
+        for (var i = 0; i < this.tabTit.length; i++) {
+            this.tabTit[i].index = i;
+            // this.tabTit[i].onclick = change;
+            this.tabTit[i].onclick = function () {
+                That.change(this);
+            }
+        }
+    }
+    tab.prototype.auto = function () {
+        var That = this;
+        setInterval(function () {          
+            if(That.nowTab== That.tabTit.length-1){
+                That.nowTab=0;
+            }else{
+                That.nowTab++;     
+            }  
+            
+            for (var k = 0; k < That.tabTit.length; k++) {
+                That.tabTit[k].classList.remove("active");
+                That.tabCon[k].style.display = 'none';
+            }
+            That.tabTit[That.nowTab].className = 'active';
+            That.tabCon[That.nowTab].style.display = 'block';
+        }, 2000)
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+.box{
+    width:100px;
+    height: 100px;
+    background: #ccc;
+    position: absolute;
+    left:20px;
+}
+</style>
+
+
+<body>
+    <button class="btn">点击</button>
+    <div class="box"></div>
+
+</body>
+
+</html>
+<script>
+   var btn=document.querySelector('.btn');
+   var box=document.querySelector('.box');
+   var inow=0;
+   var time=null;
+   var leftvalue=parseInt(getComputedStyle(box).left);
+   function move(){     
+   }
+   btn.onclick=function(){
+    clearInterval(time);
+    time=setInterval(function(){
+        if(parseInt(box.style.left)==500){
+            clearInterval(time);
+        }else{           
+            box.style.left=box.offsetLeft + 10 +'px';
+        }
+       },100)
+   }
+</script>
